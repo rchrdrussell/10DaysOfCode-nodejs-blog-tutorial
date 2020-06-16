@@ -2,18 +2,28 @@
 const express = require('express');
 const expressEdge = require('express-edge');
 const path = require('path');
+const mongoose = require('mongoose');
 
 //Initialize the express app
 const app = new express();
 
+//Connecte to MongoDB database
+mongoose.connect('mongodb://localhost:27017/node-blog', { useNewUrlParser: true })
+	.then(() => console.log("You are now connected to Mongo!"))
+	.catch(err => console.log("Something went wrong!", err));
+
 //Use the modules
-app.use(express.static('public')); //Uses express in a static web form
+app.use(express.static('public')); //Use 'public' directory to store static assets
 app.use(expressEdge.engine);
-app.set('views', __dirname + '/views');
+app.set('views', __dirname + '/views'); 
 
 //Route methods
 app.get('/', (req, res) => {
 	res.render('index');
+});
+
+app.get('/posts/new', (req, res) => {
+	res.render('create');
 });
 
 app.get('/index.html', (req, res) => {

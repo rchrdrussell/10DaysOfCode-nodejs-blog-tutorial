@@ -19,7 +19,7 @@
     rel='stylesheet' type='text/css'>
  
   <!-- Custom styles for this template -->
-  <link href="css/clean-blog.min.css" rel="stylesheet">
+  <link href="css/clean-blog.min.css" rel="stylesheet"> <!--Links to static root of "public" directory-->
 </head>
  
 <body>
@@ -84,7 +84,7 @@
               </a>
             </li>
           </ul>
-          <p class="copyright text-muted">Copyright &copy; Your Website 2018</p>
+          <p class="copyright text-muted">Copyright &copy; Russell Productions</p>
         </div>
       </div>
     </div>
