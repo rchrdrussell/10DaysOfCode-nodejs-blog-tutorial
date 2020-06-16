@@ -21,6 +21,7 @@
   "homepage": "https://github.com/RussellAjax/nodejs-blog-tutorial#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "express-edge": "^2.0.2",
     "nodemon": "^2.0.4",
     "startbootstrap-clean-blog": "^5.0.8"
   }
