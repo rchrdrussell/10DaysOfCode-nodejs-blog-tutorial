@@ -7,6 +7,12 @@ const bodyParser = require('body-parser');
 const Post = require('./db/models/Post');
 const fileUpload = require('express-fileupload');
 
+//Import controllers
+const createPostController = require('./controllers/createPost');
+const homePageController = require('./controllers/homePage');
+const storePostController = require('./controllers/storePost');
+const getPostController = require('./controllers/getPost');
+
 //Initialize the express app
 const app = new express();
 
@@ -25,6 +31,11 @@ app.use(bodyParser.urlencoded({
 	extended: true
 }));
 
+const storePost = require('./middleware/storePost')
+app.use('/posts/store', storePost)
+
+/*
+//Old, before use of controllers
 //Route methods
 app.get('/', async(req, res) => {
 	const posts = await Post.find({})
@@ -32,14 +43,12 @@ app.get('/', async(req, res) => {
 		posts
 	})
 });
-
 app.get('/post/:id', async(req, res) => {
 	const post = await Post.findById(req.params.id)
 	res.render('post', {
 		post
 	})
 });
-
 app.get('/posts/new', (req, res) => {
 	res.render('create');
 });
@@ -59,6 +68,17 @@ app.post('/posts/store', (req, res) => {
 	})
 });
 
+*/
+
+//With the use of controllers:
+app.get('/', homePageController);
+app.get('/post/:id', getPostController);
+app.get('/posts/new', createPostController);
+app.post('/posts/store', storePostController);
+//End of controllers
+
+
+//Other routes
 app.get('/index.html', (req, res) => {
 	res.sendFile(path.resolve(__dirname, 'pages/index.html'));
 });
