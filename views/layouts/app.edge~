@@ -19,7 +19,7 @@
     rel='stylesheet' type='text/css'>
  
   <!-- Custom styles for this template -->
-  <link href="css/clean-blog.min.css" rel="stylesheet"> <!--Links to static root of "public" directory-->
+  <link href="/css/clean-blog.min.css" rel="stylesheet"> <!--Links to static root of "public" directory-->
 </head>
  
 <body>
@@ -34,18 +34,24 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="index.html">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="about.html">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="post.html">Sample Post</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="contact.html">Contact</a>
-          </li>
+	@if(!auth)
+	  <li class="nav-item">
+		  <a class="nav-link" href="/auth/login">Login</a>
+	  </li>
+	  <li class="nav-item">
+		  <a class="nav-link" href="/auth/register">Register</a>
+	  </li>
+	  @else <!--User needs to LOGIN first, not just register-->
+	  <li class="nav-item">
+		  <a class="nav-link" href="/">Home</a>
+	  </li>
+	  <li class="nav-item">
+		  <a class="nav-link"  href="/post/new">New Post</a>
+	  </li>
+	  <li class=-"nav-item">
+		  <a class="nav-link" href="/auth/logout">Logout</a>
+	  </li>
+	@endif
         </ul>
       </div>
     </div>
