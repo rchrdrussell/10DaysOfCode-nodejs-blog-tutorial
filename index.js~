@@ -3,27 +3,49 @@ const express = require('express');
 const expressEdge = require('express-edge');
 const path = require('path');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const Post = require('./db/models/Post');
 
 //Initialize the express app
 const app = new express();
 
 //Connecte to MongoDB database
-mongoose.connect('mongodb://localhost:27017/node-blog', { useNewUrlParser: true })
+mongoose.connect('mongodb://localhost:27017/node-blog', { useNewUrlParser: true, useUnifiedTopology: true })
 	.then(() => console.log("You are now connected to Mongo!"))
 	.catch(err => console.log("Something went wrong!", err));
 
 //Use the modules
 app.use(express.static('public')); //Use 'public' directory to store static assets
 app.use(expressEdge.engine);
-//app.set('views', __dirname + '/views'); //For Edge template rendering
+app.set('views', __dirname + '/views'); 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+	extended: true
+}));
 
 //Route methods
-app.get('/', (req, res) => {
-	res.render('index');
+app.get('/', async(req, res) => {
+	const posts = await Post.find({})
+	res.render('index', {
+		posts
+	})
+});
+
+app.get('/post/:id', async(req, res) => {
+	const post = await Post.findById(req.params.id)
+	res.render('post', {
+		post
+	})
 });
 
 app.get('/posts/new', (req, res) => {
 	res.render('create');
+});
+
+app.post('/posts/store', (req, res) => {
+	Post.create(req.body, (error, post) => {
+		res.redirect('/')
+	})
 });
 
 app.get('/index.html', (req, res) => {
